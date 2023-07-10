@@ -15,3 +15,4 @@ cmake ..
 
 - Refactor the code (manage class' access modifiers)
 - Add randomness to ball initializing (and get rid of `initial_x` and `initial_y`)
+- Think about fixing collision
