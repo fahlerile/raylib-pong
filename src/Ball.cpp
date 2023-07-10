@@ -1,19 +1,19 @@
 #include <raylib.h>
 #include "Ball.hpp"
-#include "utils.hpp"
 
-Ball::Ball(int x, int y, int speed, int size, Color color)
+Ball::Ball(float x, float y, float speed, float size, Color color)
 {
     this->x = x;
     this->y = y;
     this->speed = speed;
-    this->size = size;
+    this->width = size;
+    this->height = size;
     this->color = color;
 
     this->initial_x = x;
     this->initial_y = y;
 
-    update_box_2d(this->box, this->x, this->y, this->size, this->size);
+    this->set_box();
 }
 
 // Changes the bounce direction
@@ -38,22 +38,23 @@ void Ball::move()
     else
         this->x -= this->speed;
 
-    update_box_2d(this->box, this->x, this->y, this->size, this->size);
+    this->set_box();
 }
 
-// Resets the ball to its initial state
-void Ball::reset() 
+// Resets the ball to its initial state (randomizing `y` value)
+void Ball::reset()
 {
     this->x = this->initial_x;
-    this->y = this->initial_y;
+    this->y = (GetRandomValue(0, 1)) ? this->initial_y + GetRandomValue(0, this->initial_y / 2) :
+                                       this->initial_y - GetRandomValue(0, this->initial_y / 2);
     this->up = false;
     this->right = true;
 
-    update_box_2d(this->box, this->x, this->y, this->size, this->size);
+    this->set_box();
 }
 
 // Draw the ball to the screen
 void Ball::draw()
 {
-    DrawRectangle(this->x, this->y, this->size, this->size, this->color);
+    DrawRectangle(this->x, this->y, this->width, this->height, this->color);
 }

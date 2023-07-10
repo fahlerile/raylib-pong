@@ -49,29 +49,29 @@ int main(void)
             DrawRectangle(vertical_line_x, 0, vertical_line_width, screen_height, main_color);
 
             // write score text
-            write_score(pong_1.score, vertical_line_x, 0, text_y, text_size);
-            write_score(pong_2.score, vertical_line_x, vertical_line_x + vertical_line_width, text_y, text_size);
+            write_score(pong_1.get_score(), vertical_line_x, 0, text_y, text_size);
+            write_score(pong_2.get_score(), vertical_line_x, vertical_line_x + vertical_line_width, text_y, text_size);
 
             // draw pongs
             pong_1.draw();
             pong_2.draw();
             ball.draw();
 
-            if (CheckCollisionBoxes(ball.box, pong_2.box) || CheckCollisionBoxes(ball.box, pong_1.box))
-                ball.toggle_bonuce_direction(HORIZONTAL);
-            if (ball.y < 0 || (ball.y + ball.size) > screen_height)
-                ball.toggle_bonuce_direction(VERTICAL);
+            // if (CheckCollisionBoxes(ball.get_box(), pong_2.get_box()) || CheckCollisionBoxes(ball.get_box(), pong_1.get_box()))
+            //     ball.toggle_bonuce_direction(HORIZONTAL);
+            // if (ball.y < 0 || (ball.y + ball.size) > screen_height)
+            //     ball.toggle_bonuce_direction(VERTICAL);
 
-            if (ball.x < 0)
-            {
-                ball.reset();
-                pong_2.score++;
-            }
-            else if ((ball.x + ball.size) > screen_width)
-            {
-                ball.reset();
-                pong_1.score++;
-            }
+            // if (ball.x < 0)
+            // {
+            //     ball.reset();
+            //     pong_2.score++;
+            // }
+            // else if ((ball.x + ball.size) > screen_width)
+            // {
+            //     ball.reset();
+            //     pong_1.score++;
+            // }
 
             ball.move();
 

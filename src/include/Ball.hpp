@@ -1,26 +1,20 @@
 #pragma once
 #include <raylib.h>
+#include "Entity.hpp"
 
 enum Touched {VERTICAL, HORIZONTAL, BOTH};
 
-class Ball
+class Ball : Entity
 {
     private:
         bool up = false;
         bool right = true;
-        Color color;
 
-        int initial_x;
-        int initial_y;
+        float initial_x;
+        float initial_y;
 
     public:
-        int x;
-        int y;
-        BoundingBox box;
-        int size;
-        int speed;
-
-        Ball(int x, int y, int speed, int size, Color color);
+        Ball(float x, float y, float speed, float size, Color color);
         void toggle_bonuce_direction(Touched touched_side);
         void move();
         void reset();

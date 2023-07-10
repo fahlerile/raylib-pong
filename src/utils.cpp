@@ -2,16 +2,6 @@
 #include <raylib.h>
 #include "utils.hpp"
 
-// Update the bounding box
-void update_box_2d(BoundingBox &box, int x, int y, int width, int height)
-{
-    BoundingBox temp_box {
-        Vector3 {(float) x,         (float) y,          (float) 0},
-        Vector3 {(float) x + width, (float) y + height, (float) 0}
-    };
-    box = temp_box;
-}
-
 // Draw score text
 void write_score(int score, int width_to_center_in, int x_offset, int y, int size)
 {

@@ -6,9 +6,10 @@ project(raylib-pong)
 set(
 	SOURCES
 	src/main.cpp
-	src/Ball.cpp
-	src/Pong.cpp
 	src/utils.cpp
+	src/Entity.cpp
+	src/Pong.cpp
+	src/Ball.cpp
 )
 
 add_executable(pong ${SOURCES})
