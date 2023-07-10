@@ -6,11 +6,15 @@ project(raylib-pong)
 set(
 	SOURCES
 	src/main.cpp
+	src/Ball.cpp
+	src/Pong.cpp
+	src/utils.cpp
 )
 
 add_executable(pong ${SOURCES})
 
 target_include_directories(pong PUBLIC lib/include)
+target_include_directories(pong PUBLIC src/include)
 
 find_library(
 	RAYLIB_LIB
