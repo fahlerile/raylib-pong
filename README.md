@@ -13,4 +13,5 @@ cmake ..
 
 # TODO
 
-- Collision
+- Get rid of `const` hell in `src/main.cpp`
+- Fix pong-ball side collision bug

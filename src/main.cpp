@@ -1,4 +1,5 @@
 #include <iostream>
+
 #include <raylib.h>
 #include "Pong.hpp"
 #include "Ball.hpp"
@@ -7,38 +8,43 @@
 int main(void)
 {
     // CONSTANTS
-    const int screen_width = 800;
-    const int screen_height = 600;
-    const int screen_middle_width = screen_width / 2;
-    const int screen_middle_height = screen_height / 2;
+    const Vector2 window_dimensions {800, 600};
+    const Vector2 half_window_dimensions {window_dimensions.x / 2,
+                                          window_dimensions.y / 2};
 
     const int pong_margin = 10;  // pong margin from the window borders
     const int pong_width = 25;
     const int pong_height = 100;
-    const int pong_vertical_speed = 3;
-
     const Color main_color {25, 25, 25, 255};
 
     const int vertical_line_width = 10;
-    const int vertical_line_x = screen_middle_width - (vertical_line_width / 2);
+    const int vertical_line_x = half_window_dimensions.x - (vertical_line_width / 2);
 
     const int text_y = 10;
     const int text_size = 30;
 
+    // default values
+    const int pong_start_vertical_speed = 3;
+    const int pong_start_y = half_window_dimensions.y - (pong_height) / 2;
+    const int ball_start_speed = 3;
+    const float ball_speed_change = 0.2f;
+    const float ball_speed_max = 6.0f;
+    const int ball_start_size = 25;
+
     // initializing Pongs and a Ball
-    Pong pong_1(pong_margin, 10, pong_width, pong_height, pong_vertical_speed, main_color);
-    Pong pong_2(screen_width - (pong_margin + pong_width), 10, pong_width, pong_height, pong_vertical_speed, main_color);
-    Ball ball(screen_middle_width, screen_middle_height, 3, 25, main_color);
+    Pong pong_1(pong_margin, pong_start_y, pong_width, pong_height, pong_start_vertical_speed, main_color);
+    Pong pong_2(window_dimensions.x - (pong_margin + pong_width), pong_start_y, pong_width, pong_height, pong_start_vertical_speed, main_color);
+    Ball ball(half_window_dimensions.x, half_window_dimensions.y, ball_start_speed, ball_speed_change, ball_speed_max, ball_start_size, main_color);
 
     // initializing a window
-    InitWindow(screen_width, screen_height, "Pong!");
+    InitWindow(window_dimensions.x, window_dimensions.y, "Pong!");
     SetTargetFPS(60);
 
     // main loop
     while (!WindowShouldClose())
     {
-        pong_1.process_input(KEY_W, KEY_S, screen_height);
-        pong_2.process_input(KEY_UP, KEY_DOWN, screen_height);
+        pong_1.process_input(KEY_W, KEY_S, window_dimensions.y);
+        pong_2.process_input(KEY_UP, KEY_DOWN, window_dimensions.y);
 
         BeginDrawing();
 
@@ -46,7 +52,7 @@ int main(void)
             ClearBackground(RAYWHITE);
 
             // draw vertical line
-            DrawRectangle(vertical_line_x, 0, vertical_line_width, screen_height, main_color);
+            DrawRectangle(vertical_line_x, 0, vertical_line_width, window_dimensions.y, main_color);
 
             // write score text
             write_score(pong_1.get_score(), vertical_line_x, 0, text_y, text_size);
@@ -57,23 +63,10 @@ int main(void)
             pong_2.draw();
             ball.draw();
 
-            // if (CheckCollisionBoxes(ball.get_box(), pong_2.get_box()) || CheckCollisionBoxes(ball.get_box(), pong_1.get_box()))
-            //     ball.toggle_bonuce_direction(HORIZONTAL);
-            // if (ball.y < 0 || (ball.y + ball.size) > screen_height)
-            //     ball.toggle_bonuce_direction(VERTICAL);
-
-            // if (ball.x < 0)
-            // {
-            //     ball.reset();
-            //     pong_2.score++;
-            // }
-            // else if ((ball.x + ball.size) > screen_width)
-            // {
-            //     ball.reset();
-            //     pong_1.score++;
-            // }
-
+            ball.check_collision_and_bounce(pong_1, pong_2, window_dimensions);
             ball.move();
+
+            std::cout << ball.get_speed() << std::endl;
 
         EndDrawing();
     }

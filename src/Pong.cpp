@@ -1,6 +1,8 @@
 #include <raylib.h>
 #include "Pong.hpp"
 
+#include <iostream>
+
 Pong::Pong(float x, float y, float width, float height, float speed, Color color)
 {
     this->x = x;
@@ -10,6 +12,7 @@ Pong::Pong(float x, float y, float width, float height, float speed, Color color
     this->speed = speed;
     this->color = color;
 
+    this->score = 0;
     this->set_box();
 }
 
@@ -26,7 +29,7 @@ void Pong::set_score(int new_score)
 
 void Pong::increment_score()
 {
-    this->score++;
+    this->score += 1;
 }
 
 // Draw the pong.

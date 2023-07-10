@@ -2,10 +2,10 @@
 #include <raylib.h>
 #include "Entity.hpp"
 
-class Pong : Entity
+class Pong : public Entity
 {
     private:
-        int score = 0;
+        int score;
 
     public:
         Pong(float x, float y, float width, float height, float speed, Color color);
