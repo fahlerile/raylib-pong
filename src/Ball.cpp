@@ -2,8 +2,6 @@
 #include "Ball.hpp"
 #include "Pong.hpp"
 
-#include <iostream>
-
 Ball::Ball(float x, float y, float speed, float speed_change, float speed_max, float size, Color color)
 {
     this->x = x;
@@ -78,7 +76,6 @@ void Ball::check_collision_and_bounce(Pong &pong_1, Pong &pong_2, Vector2 window
         CheckCollisionBoxes(this->box, pong_2.get_box()))
     {
         this->toggle_bounce_direction(HORIZONTAL);
-        std::cout << "nuggers" << std::endl;
         if (this->speed < this->speed_max)
             this->speed += this->speed_change;
     }
