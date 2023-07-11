@@ -10,8 +10,3 @@ cd raylib-pong/build
 cmake ..
 ./pong.exe
 ```
-
-# TODO
-
-- Get rid of `const` hell in `src/main.cpp`
-- Fix pong-ball side collision bug

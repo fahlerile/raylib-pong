@@ -13,23 +13,25 @@ int main(void)
                                           window_dimensions.y / 2};
 
     const int pong_margin = 10;  // pong margin from the window borders
-    const int pong_width = 25;
-    const int pong_height = 100;
-    const Color main_color {25, 25, 25, 255};
+    const int pong_width = 25;  // width of the "pong pad"
+    const int pong_height = 100;  // height of the "pong pad"
+    const Vector2 pong_dimensions {25, 100};  // dimensions of the "pong pad"
+    const Color main_color {25, 25, 25, 255};  // main color of the game (ball, pong, etc.)
 
-    const int vertical_line_width = 10;
-    const int vertical_line_x = half_window_dimensions.x - (vertical_line_width / 2);
+    const int vertical_line_width = 10;  // width of vertical separator
+    const int vertical_line_x = half_window_dimensions.x - (vertical_line_width / 2);  // x value of vertical separator (and width of each player's side)
 
-    const int text_y = 10;
-    const int text_size = 30;
+    const int text_y = 10;  // text y offset
+    const int text_size = 30;  // size of text
+
+    const int ball_size = 25;  // size of a ball
 
     // default values
-    const int pong_start_vertical_speed = 3;
-    const float pong_start_y = half_window_dimensions.y - (pong_height) / 2;
-    const float ball_start_speed = 3.0f;
-    const float ball_speed_change = 0.2f;
-    const float ball_speed_max = 6.0f;
-    const int ball_start_size = 25;
+    const int pong_start_vertical_speed = 3;  // vertical speed of pong
+    const float pong_start_y = half_window_dimensions.y - (pong_height) / 2;  // start y value of pongs
+    const float ball_start_speed = 3.0f;  // start speed of ball
+    const float ball_speed_change = 0.2f;  // how fast ball is accelerating on each bounce
+    const float ball_speed_max = 6.0f;  // max ball speed
 
     // initializing Pongs and a Ball
     Pong pong_1((Vector2) {pong_margin, pong_start_y},
@@ -39,7 +41,7 @@ int main(void)
                 (Vector2) {pong_width, pong_height},
                 pong_start_vertical_speed, main_color);
     Ball ball((Vector2) {half_window_dimensions.x, half_window_dimensions.y},
-              ball_start_speed, ball_speed_change, ball_speed_max, ball_start_size, main_color);
+              ball_start_speed, ball_speed_change, ball_speed_max, ball_size, main_color);
 
     // initializing a window
     InitWindow(window_dimensions.x, window_dimensions.y, "Pong!");
@@ -70,8 +72,6 @@ int main(void)
 
             ball.check_collision_and_bounce(pong_1, pong_2, window_dimensions);
             ball.move();
-
-            std::cout << ball.get_speed() << std::endl;
 
         EndDrawing();
     }

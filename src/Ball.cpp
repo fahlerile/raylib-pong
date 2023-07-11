@@ -72,12 +72,20 @@ void Ball::draw()
 void Ball::check_collision_and_bounce(Pong &pong_1, Pong &pong_2, Vector2 window_dimensions)
 {
     // if collision with pong
-    if (CheckCollisionBoxes(this->box, pong_1.get_box()) ||
-        CheckCollisionBoxes(this->box, pong_2.get_box()))
+    bool collision_left_pong = CheckCollisionBoxes(this->box, pong_1.get_box());
+    bool collision_right_pong = CheckCollisionBoxes(this->box, pong_2.get_box());
+
+    if (collision_left_pong || collision_right_pong)
     {
         this->toggle_bounce_direction(HORIZONTAL);
         if (this->speed < this->speed_max)
             this->speed += this->speed_change;
+
+        // push ball from the pong
+        if (collision_left_pong)
+            this->position.x += 1.0f;
+        else
+            this->position.x -= 1.0f;
     }
 
     // if collision with up or down ends of the screen
