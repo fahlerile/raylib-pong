@@ -2,13 +2,11 @@
 #include "Ball.hpp"
 #include "Pong.hpp"
 
-Ball::Ball(float x, float y, float speed, float speed_change, float speed_max, float size, Color color)
+Ball::Ball(Vector2 position, float speed, float speed_change, float speed_max, float size, Color color)
 {
-    this->x = x;
-    this->y = y;
+    this->position = position;
     this->speed = speed;
-    this->width = size;
-    this->height = size;
+    this->dimensions = (Vector2) {size, size};
     this->color = color;
 
     this->up = (bool) GetRandomValue(0, 1);
@@ -17,8 +15,7 @@ Ball::Ball(float x, float y, float speed, float speed_change, float speed_max, f
     this->speed_change = speed_change;
     this->speed_max = speed_max;
 
-    this->initial_x = x;
-    this->initial_y = y;
+    this->initial_position = position;
     this->initial_speed = speed;
 
     this->set_box();
@@ -37,14 +34,14 @@ void Ball::toggle_bounce_direction(Touched touched_side)
 void Ball::move()
 {
     if (up)
-        this->y -= this->speed;
+        this->position.y -= this->speed;
     else
-        this->y += this->speed;
+        this->position.y += this->speed;
 
     if (right)
-        this->x += this->speed;
+        this->position.x += this->speed;
     else
-        this->x -= this->speed;
+        this->position.x -= this->speed;
 
     this->set_box();
 }
@@ -52,9 +49,10 @@ void Ball::move()
 // Resets the ball to its initial state (randomizing `y` value)
 void Ball::reset()
 {
-    this->x = this->initial_x;
-    this->y = (GetRandomValue(0, 1)) ? this->initial_y + GetRandomValue(0, this->initial_y / 2) :
-                                       this->initial_y - GetRandomValue(0, this->initial_y / 2);
+    this->position.x = this->initial_position.x;
+    this->position.y = (GetRandomValue(0, 1)) ?
+                        this->initial_position.y + GetRandomValue(0, this->initial_position.y / 2) :
+                        this->initial_position.y - GetRandomValue(0, this->initial_position.y / 2);
     this->up = (bool) GetRandomValue(0, 1);
     this->right = (bool) GetRandomValue(0, 1);
 
@@ -64,7 +62,9 @@ void Ball::reset()
 // Draw the ball to the screen
 void Ball::draw()
 {
-    DrawRectangle(this->x, this->y, this->width, this->height, this->color);
+    DrawRectangle(this->position.x, this->position.y,
+                  this->dimensions.x, this->dimensions.y,
+                  this->color);
 }
 
 // Check collision for ball and bounce if needed.
@@ -81,12 +81,12 @@ void Ball::check_collision_and_bounce(Pong &pong_1, Pong &pong_2, Vector2 window
     }
 
     // if collision with up or down ends of the screen
-    if (this->y < 0 || (this->y + this->height) > window_dimensions.y)
+    if (this->position.y < 0 || (this->position.y + this->dimensions.y) > window_dimensions.y)
         this->toggle_bounce_direction(VERTICAL);
 
     // if collision with left or right ends of the screen
-    bool collision_left = (this->x < 0);
-    bool collision_right = ((this->x + this->width) > window_dimensions.x);
+    bool collision_left = (this->position.x < 0);
+    bool collision_right = ((this->position.x + this->dimensions.x) > window_dimensions.x);
 
     if (collision_left || collision_right)
     {

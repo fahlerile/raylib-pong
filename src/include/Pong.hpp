@@ -8,7 +8,7 @@ class Pong : public Entity
         int score;
 
     public:
-        Pong(float x, float y, float width, float height, float speed, Color color);
+        Pong(Vector2 position, Vector2 dimensions, float speed, Color color);
         int get_score();
         void set_score(int new_score);
         void increment_score();

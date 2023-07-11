@@ -4,13 +4,13 @@
 // Get position vector. (x, y)
 Vector2 Entity::get_position()
 {
-    return Vector2 {this->x, this->y};
+    return this->position;
 }
 
 // Get dimensions vector. (width, height)
 Vector2 Entity::get_dimensions()
 {
-    return Vector2 {this->width, this->height};
+    return this->dimensions;
 }
 
 // Get speed value
@@ -29,11 +29,10 @@ void Entity::set_speed(float new_speed)
 // Update the bounding box
 void Entity::set_box()
 {
-    BoundingBox temp_box {
-        Vector3 {this->x,               this->y,                0},
-        Vector3 {this->x + this->width, this->y + this->height, 0}
+    this->box = (BoundingBox) {
+        Vector3 {this->position.x,                      this->position.y,                      0},
+        Vector3 {this->position.x + this->dimensions.x, this->position.y + this->dimensions.y, 0}
     };
-    this->box = temp_box;
 }
 
 BoundingBox Entity::get_box()

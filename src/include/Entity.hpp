@@ -4,10 +4,8 @@
 class Entity
 {
     protected:
-        float x;
-        float y;
-        float width;
-        float height;
+        Vector2 position;
+        Vector2 dimensions;
         float speed;
         Color color;
         BoundingBox box;

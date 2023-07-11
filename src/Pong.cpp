@@ -3,12 +3,10 @@
 
 #include <iostream>
 
-Pong::Pong(float x, float y, float width, float height, float speed, Color color)
+Pong::Pong(Vector2 position, Vector2 dimensions, float speed, Color color)
 {
-    this->x = x;
-    this->y = y;
-    this->width = width;
-    this->height = height;
+    this->position = position;
+    this->dimensions = dimensions;
     this->speed = speed;
     this->color = color;
 
@@ -35,15 +33,17 @@ void Pong::increment_score()
 // Draw the pong.
 void Pong::draw()
 {
-    DrawRectangle(this->x, this->y, this->width, this->height, this->color);
+    DrawRectangle(this->position.x, this->position.y,
+                  this->dimensions.x, this->dimensions.y,
+                  this->color);
 }
 
 void Pong::process_input(KeyboardKey up, KeyboardKey down, int screen_height)
 {
-    if (IsKeyDown(up) && this->y > 0)
-        this->y -= this->speed;
-    else if (IsKeyDown(down) && this->y < (screen_height - this->height))
-        this->y += this->speed;
+    if (IsKeyDown(up) && this->position.y > 0)
+        this->position.y -= this->speed;
+    else if (IsKeyDown(down) && this->position.y < (screen_height - this->dimensions.y))
+        this->position.y += this->speed;
 
     this->set_box();
 }

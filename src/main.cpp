@@ -25,16 +25,21 @@ int main(void)
 
     // default values
     const int pong_start_vertical_speed = 3;
-    const int pong_start_y = half_window_dimensions.y - (pong_height) / 2;
-    const int ball_start_speed = 3;
+    const float pong_start_y = half_window_dimensions.y - (pong_height) / 2;
+    const float ball_start_speed = 3.0f;
     const float ball_speed_change = 0.2f;
     const float ball_speed_max = 6.0f;
     const int ball_start_size = 25;
 
     // initializing Pongs and a Ball
-    Pong pong_1(pong_margin, pong_start_y, pong_width, pong_height, pong_start_vertical_speed, main_color);
-    Pong pong_2(window_dimensions.x - (pong_margin + pong_width), pong_start_y, pong_width, pong_height, pong_start_vertical_speed, main_color);
-    Ball ball(half_window_dimensions.x, half_window_dimensions.y, ball_start_speed, ball_speed_change, ball_speed_max, ball_start_size, main_color);
+    Pong pong_1((Vector2) {pong_margin, pong_start_y},
+                (Vector2) {pong_width, pong_height},
+                pong_start_vertical_speed, main_color);
+    Pong pong_2((Vector2) {window_dimensions.x - (pong_margin + pong_width), pong_start_y},
+                (Vector2) {pong_width, pong_height},
+                pong_start_vertical_speed, main_color);
+    Ball ball((Vector2) {half_window_dimensions.x, half_window_dimensions.y},
+              ball_start_speed, ball_speed_change, ball_speed_max, ball_start_size, main_color);
 
     // initializing a window
     InitWindow(window_dimensions.x, window_dimensions.y, "Pong!");

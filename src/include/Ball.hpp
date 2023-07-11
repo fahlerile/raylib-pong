@@ -14,12 +14,11 @@ class Ball : public Entity
         float speed_change;
         float speed_max;
 
-        float initial_x;
-        float initial_y;
+        Vector2 initial_position;
         float initial_speed;
 
     public:
-        Ball(float x, float y, float speed, float speed_change, float speed_max, float size, Color color);
+        Ball(Vector2 position, float speed, float speed_change, float speed_max, float size, Color color);
         void toggle_bounce_direction(Touched touched_side);
         void move();
         void reset();
